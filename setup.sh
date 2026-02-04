@@ -39,8 +39,8 @@ TARGET_DIR=".github"
 TARGET_FILE="$TARGET_DIR/copilot-instructions.md"
 BACKUP_FILE="$TARGET_DIR/copilot-instructions.md.backup"
 
-# Size budget (5KB = 5120 bytes)
-SIZE_CAP=5120
+# Size budget (32KB = 32768 bytes) - Modern LLMs handle this easily
+SIZE_CAP=32768
 
 # Available frameworks
 AVAILABLE_FRAMEWORKS="nextjs, django, rails, express, fastapi, springboot, python, docker"
@@ -265,8 +265,8 @@ if [ -n "$FRAMEWORK" ]; then
     CURRENT_SIZE=$(wc -c < "$TARGET_FILE" | tr -d ' ')
     if [ "$CURRENT_SIZE" -gt "$SIZE_CAP" ]; then
         echo ""
-        echo -e "${RED}⚠️  Warning: File size ($CURRENT_SIZE bytes) exceeds 5KB cap ($SIZE_CAP bytes)${NC}"
-        echo "Consider removing a framework to stay within the context window budget."
+        echo -e "${RED}⚠️  Warning: File size ($CURRENT_SIZE bytes) exceeds limit ($SIZE_CAP bytes)${NC}"
+        echo "Consider removing a framework or condensing project rules to stay optimized."
     else
         echo ""
         echo -e "${GREEN}✓ File size: $CURRENT_SIZE / $SIZE_CAP bytes ($(( CURRENT_SIZE * 100 / SIZE_CAP ))% of budget)${NC}"
@@ -352,8 +352,8 @@ echo "       git add $TARGET_FILE"
 echo "       git commit -m 'Add AI guardrails'"
 echo ""
 echo "  To update guardrails in the future:"
-echo "    git submodule update --remote .github/ai-safety"
-echo "    ./.github/ai-safety/setup.sh --force"
+echo "    git submodule update --remote .github/catpilot-ai-guardrails"
+echo "    ./.github/catpilot-ai-guardrails/setup.sh --force"
 echo ""
 echo "  Framework options:"
 echo "    Auto-detect (default): setup.sh"
